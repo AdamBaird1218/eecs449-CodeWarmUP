@@ -1,3 +1,4 @@
 js.session
-logoutput/
+dialogue_intent_model/
+tfm_ner_model/
 modeloutput/
