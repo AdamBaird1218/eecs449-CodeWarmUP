@@ -12,14 +12,15 @@ node dialogue_state {
     can classify_intent {
         intent_labels = -[intent_transition]->.edge.intent;
         visitor.wlk_ctx["intent"] = bi_enc.infer(
-            contexts = [visitor.quesiton],
+            contexts = [visitor.question],
             candidates = intent_labels,
             context_type = "text",
-            candidate_type = "test"
+            candidate_type = "text"
         )[0]["predicted"]["label"];
     }
 
-    can extract_entity {
+    can extract_entities {
+        // Entity extraction logic will be added a bit later on.
         res = tfm_ner.extract_entity(visitor.question);
         for ent in res {
             ent_type = ent["entity_value"];
@@ -40,11 +41,10 @@ node dialogue_state {
             "respond": false
         };
         if ("entities" in visitor.wlk_ctx) {
-            //Carry over extracted from previous interaction
+            // Carry over extracted entities from previous interaction
             new_wlk_ctx["entities"] = visitor.wlk_ctx["entities"];
         }
         visitor.wlk_ctx = new_wlk_ctx;
-
     }
     can nlu {}
     can process {
@@ -54,7 +54,7 @@ node dialogue_state {
             visitor.wlk_ctx["prev_state"] = here;
         }
     }
-    can ngl {}
+    can nlg {}
 }
 
 node dialogue_root:dialogue_state {
