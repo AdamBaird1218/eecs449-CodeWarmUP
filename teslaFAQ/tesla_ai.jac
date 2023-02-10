@@ -1,5 +1,6 @@
 // node dialogue_root;
 import {*} with "./faq.jac";
+import {*} with "./ai_model.jac";
 // node dialogue_state {
 //     has name;
 //     has response;
